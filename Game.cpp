@@ -5,7 +5,7 @@
 
 using namespace std;
 Game::Game() {
-	for(int i = 1 ; i < 14; ++i){ //makes deck with 52 cards
+	for(int i = 2 ; i <= 14; ++i){ //makes deck with 52 cards
 		for(int j = 0; j < 4; ++j){
 			switch (j) {
 				case 0:
@@ -24,14 +24,8 @@ Game::Game() {
 		}
 	}
 }
-int Game::randomDeal(vector<string> & stack, string & player) { // randomly puts 5 cards on the board
-	int k = rand() % stack.size()-1;
-	player = stack[k];
-	remove(stack.begin(), stack.end(),player);
-	stack.resize(stack.size()-1);
-	return success;
-}
-int Game::randomDeal(std::vector<std::string> &stack, std::unordered_set<std::string>& board) {
+
+int Game::randomDeal(std::vector<std::string> &stack, std::unordered_set<std::string>& board) { // randomly puts 5 cards on the board
 	for(int i = 0; i < 5; ++i) {
 		int k = rand() % stack.size() - 1;
 		board.insert(stack[k]);
@@ -39,10 +33,42 @@ int Game::randomDeal(std::vector<std::string> &stack, std::unordered_set<std::st
 		stack.resize(stack.size() - 1);
 	}
 }
-
-int Game::dealPlayer(string & player2first, string & player2second) {
-	this->randomDeal(deck, player2first);
-	this->randomDeal(deck, player2second);
+int Game::randomDeal(vector<string> & stack, string & player) {
+	int k = rand() % stack.size()-1;
+	player = stack[k];
+	remove(stack.begin(), stack.end(),player);
+	stack.resize(stack.size()-1);
+	return success;
+}
+vector<string> Game::dealPlayer() {
+	string player2First = "";
+	string player2Second = "";
+	this->randomDeal(deck, player2First);
+	this->randomDeal(deck, player2Second);
+	vector<string> hand;
+	hand.push_back(player2First);
+	hand.push_back(player2Second);
+	return hand;
+}
+int Game::stringToInt(string card) {
+	int k = 0;
+	string cardNumber = "";
+	for(int i = 2; i <= 14; ++i){
+		if(card.length() == 3){
+			cardNumber = card.substr(0,2);
+		}
+		else {
+			cardNumber = card.substr(0,1);
+		}
+		if (cardNumber == to_string(i)){
+			k = i;
+		}
+	}
+	if(cardNumber == "J"){ k = 11;}
+	if(cardNumber == "Q"){ k = 12;}
+	if(cardNumber == "K"){ k = 13;}
+	if(cardNumber == "A"){ k = 14;}
+	return k;
 }
 
 Game::~Game() {}

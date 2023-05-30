@@ -1,13 +1,15 @@
 // Created by Rohan Tatikonda on 5/24/23.
 #include <string>
 #include "Game.h"
+#include "Player.h"
+#include "WinCheck.h"
 
 using namespace std;
 int main(int argc, char* argv[]){
-	Game test;
-	test.randomDeal(test.deck, test.board);
-	string playerFirstCard;
-	string playerSecondCard;
-	test.dealPlayer(playerFirstCard,playerSecondCard);
-
+	Game example;
+	Player a;
+	Player b;
+	WinCheck test(a, b, example);
+	test.setup();
+	Player c;
 }
